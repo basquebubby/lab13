@@ -17,19 +17,8 @@ root = Tk()
 drawpad = Canvas(root, width=800,height=600, background='white')
 player = drawpad.create_oval(390,580,410,600, fill="red")
 enemy = drawpad.create_rectangle(0,280,110,300, fill="blue")
+enemy1 = drawpad.create_rectangle(0,140,55,150, fill="red")
 # Create your "enemies" here, before the class
-enemyspeed = 20
-
-def animate(self):
-	    global enemyspeed
-	    x1, y1, x2, y2 = drawpad.coords(enemy)
-            if x2 > drawpad.winfo_width(): 
-                drawpad.move(enemy,-enemyspeed,0)
-            elif x1 < 0:
-                enemyspeed = enemyspeed
-            drawpad.move(enemy,enemyspeed,0)
-            # Wait for 1 millisecond, then recursively call our animate function
-            drawpad.after(1, animate)	
 
 class MyApp:
 	def __init__(self, parent):
@@ -65,14 +54,28 @@ class MyApp:
        	    
        	    # No need to edit this - just includes the drawpad into our frame
        	    drawpad.pack(side=BOTTOM)
+            self.animate()
 	
 	def animate(self):
 	    global drawpad
 	    global player
 	    global enemy
-	    global enemyspeed
+	    global enemy1
+	    x1, y1, x2, y2 = drawpad.coords(enemy)
+	    a1, b1, a2, b2 = drawpad.coords(enemy1)
+	    if x1 >= drawpad.winfo_width():
+	        drawpad.move(enemy,-drawpad.winfo_width(),0)
+	    elif x2 < 0:
+	        drawpad.move(enemy, 20, 0)
+	    if a1 >= drawpad.winfo_width():
+	        drawpad.move(enemy1,-drawpad.winfo_width(),0)
+	    elif a2 < 0:
+	        drawpad.move(enemy1, 20, 0)
+	    drawpad.move(enemy,10,0)
+	    drawpad.move(enemy1,20,0)
+	    drawpad.after(1,self.animate)
 	    # Remember to include your "enemies" with "global"
-		
+	
 	def upClicked(self, event):   
 	   global oval
 	   global player
